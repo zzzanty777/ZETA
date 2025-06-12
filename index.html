@@ -4,110 +4,81 @@
   <meta charset="UTF-8" />
   <title>ZETA - Tunning de coches con IA</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
-    header {
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
       text-align: center;
-      margin-bottom: 40px;
-      position: relative; /* Para posicionar las sugerencias absolutas dentro */
     }
-    h1 { color: #333; }
+
     #searchBox {
       width: 300px;
       padding: 10px;
       font-size: 16px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 5px 5px 0 0; /* redondeado arriba */
       box-sizing: border-box;
+      outline: none;
     }
+
     #suggestions {
       width: 300px;
+      margin: 0 auto;
       background: white;
       border: 1px solid #ccc;
-      border-top: none;
+      border-top: none; /* para no duplicar borde con el input */
       max-height: 150px;
       overflow-y: auto;
-      position: absolute;  /* Absoluto para posicionar justo debajo del input */
-      top: 42px;           /* Altura justo debajo del input (ajustar si cambias input) */
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 0 0 5px 5px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 0 0 5px 5px; /* redondeado abajo */
       font-size: 16px;
-      z-index: 1000;
+      box-sizing: border-box;
     }
+
     #suggestions div {
       padding: 8px;
       cursor: pointer;
     }
+
     #suggestions div:hover {
       background-color: #4caf50;
       color: white;
     }
-    #car-boceto {
-      margin-top: 30px;
-      text-align: center;
-    }
+
     .info-panel {
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      padding: 15px;
-      background-color: white;
+      margin-top: 30px;
+      background: white;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+      padding: 15px;
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
       min-height: 120px;
       white-space: pre-wrap;
-    }
-    svg {
-      width: 400px;
-      height: 200px;
-      cursor: pointer;
-    }
-    .car-part {
-      fill: #bbb;
-      stroke: #333;
-      stroke-width: 2;
-      transition: fill 0.3s;
-    }
-    .car-part:hover {
-      fill: #4caf50;
+      text-align: left;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>ZETA</h1>
-    <p>Tunning de coches con inteligencia artificial</p>
-    <input type="search" placeholder="Buscar coche por marca o modelo" id="searchBox" autocomplete="off" />
-    <div id="suggestions"></div>
-  </header>
+  <h1>ZETA</h1>
+  <p>Tunning de coches con inteligencia artificial</p>
 
-  <section id="car-boceto">
-    <svg viewBox="0 0 400 200" role="img" aria-label="Boceto coche interactivo">
-      <rect class="car-part" id="carroceria" x="50" y="50" width="300" height="80" />
-      <circle class="car-part" id="rueda-izq" cx="100" cy="140" r="30" />
-      <circle class="car-part" id="rueda-der" cx="300" cy="140" r="30" />
-      <rect class="car-part" id="ventana" x="120" y="60" width="160" height="40" />
-    </svg>
-  </section>
+  <input
+    type="search"
+    id="searchBox"
+    placeholder="Buscar coche por marca o modelo"
+    autocomplete="off"
+  />
+  <div id="suggestions"></div>
 
   <section class="info-panel" id="infoPanel">
     <p>Pasa el cursor sobre una pieza para ver información o busca un coche para ver detalles.</p>
   </section>
 
   <script>
-    const infoPanel = document.getElementById('infoPanel');
-    const searchBox = document.getElementById('searchBox');
-    const suggestions = document.getElementById('suggestions');
-
-    const partsInfo = {
-      'carroceria': 'Carrocería: estructura principal del coche, donde se hacen muchas modificaciones estéticas.',
-      'rueda-izq': 'Rueda izquierda: aquí puedes cambiar llantas, neumáticos y frenos.',
-      'rueda-der': 'Rueda derecha: similar a la izquierda, importante para la estabilidad.',
-      'ventana': 'Ventanas: se pueden tintar o modificar para mejorar estética y privacidad.'
-    };
+    const searchBox = document.getElementById("searchBox");
+    const suggestions = document.getElementById("suggestions");
+    const infoPanel = document.getElementById("infoPanel");
 
     const cars = [
       "Audi A4",
@@ -119,76 +90,85 @@
       "Nissan GT-R",
       "Toyota Supra",
       "Volkswagen Golf",
-      "Volvo XC90"
+      "Volvo XC90",
     ];
 
     const carsInfo = {
       "Audi A4": {
-        description: "Audi A4: sedán alemán de lujo, potente motor y diseño elegante.",
-        tuningTips: "Puedes mejorar la suspensión, añadir un kit aerodinámico y optimizar el motor."
+        description:
+          "Audi A4: sedán alemán de lujo, potente motor y diseño elegante.",
+        tuningTips:
+          "Puedes mejorar la suspensión, añadir un kit aerodinámico y optimizar el motor.",
       },
       "BMW Serie 3": {
-        description: "BMW Serie 3: deportivo compacto con gran rendimiento y confort.",
-        tuningTips: "Modifica escape, llantas y sistema de frenos para mejor experiencia."
+        description:
+          "BMW Serie 3: deportivo compacto con gran rendimiento y confort.",
+        tuningTips:
+          "Modifica escape, llantas y sistema de frenos para mejor experiencia.",
       },
       "Ford Mustang": {
-        description: "Ford Mustang: clásico muscle car americano con gran potencia.",
-        tuningTips: "Cambios en motor V8, sistema de escape y mejoras en suspensión."
+        description:
+          "Ford Mustang: clásico muscle car americano con gran potencia.",
+        tuningTips:
+          "Cambios en motor V8, sistema de escape y mejoras en suspensión.",
       },
       "Honda Civic": {
-        description: "Honda Civic: compacto popular con amplia comunidad de tuning.",
-        tuningTips: "Personaliza motor, suspensión, y añade kits aerodinámicos."
+        description:
+          "Honda Civic: compacto popular con amplia comunidad de tuning.",
+        tuningTips:
+          "Personaliza motor, suspensión, y añade kits aerodinámicos.",
       },
       "Mazda MX-5": {
-        description: "Mazda MX-5: deportivo ligero y ágil, ideal para conducción divertida.",
-        tuningTips: "Mejoras en suspensión, frenos y neumáticos para mayor agarre."
+        description:
+          "Mazda MX-5: deportivo ligero y ágil, ideal para conducción divertida.",
+        tuningTips:
+          "Mejoras en suspensión, frenos y neumáticos para mayor agarre.",
       },
       "Mercedes Clase C": {
-        description: "Mercedes Clase C: sedán premium con gran confort y potencia.",
-        tuningTips: "Optimiza motor, añade sistema de escape deportivo y detalles interiores."
+        description:
+          "Mercedes Clase C: sedán premium con gran confort y potencia.",
+        tuningTips:
+          "Optimiza motor, añade sistema de escape deportivo y detalles interiores.",
       },
       "Nissan GT-R": {
-        description: "Nissan GT-R: superdeportivo japonés con alta tecnología y potencia.",
-        tuningTips: "Modificaciones en electrónica, motor y aerodinámica avanzada."
+        description:
+          "Nissan GT-R: superdeportivo japonés con alta tecnología y potencia.",
+        tuningTips:
+          "Modificaciones en electrónica, motor y aerodinámica avanzada.",
       },
       "Toyota Supra": {
-        description: "Toyota Supra: icónico deportivo japonés con motor potente y diseño agresivo.",
-        tuningTips: "Actualiza turbo, sistema de escape y mejora electrónica del motor."
+        description:
+          "Toyota Supra: icónico deportivo japonés con motor potente y diseño agresivo.",
+        tuningTips:
+          "Actualiza turbo, sistema de escape y mejora electrónica del motor.",
       },
       "Volkswagen Golf": {
-        description: "Volkswagen Golf: compacto versátil y base para tuning urbano.",
-        tuningTips: "Personaliza suspensión, llantas y sistema de audio."
+        description:
+          "Volkswagen Golf: compacto versátil y base para tuning urbano.",
+        tuningTips: "Personaliza suspensión, llantas y sistema de audio.",
       },
       "Volvo XC90": {
-        description: "Volvo XC90: SUV de lujo con alta seguridad y confort.",
-        tuningTips: "Modificaciones en sistema de suspensión y mejoras estéticas."
-      }
+        description:
+          "Volvo XC90: SUV de lujo con alta seguridad y confort.",
+        tuningTips:
+          "Modificaciones en sistema de suspensión y mejoras estéticas.",
+      },
     };
 
-    Object.keys(partsInfo).forEach(id => {
-      const element = document.getElementById(id);
-      element.addEventListener('mouseenter', () => {
-        infoPanel.textContent = partsInfo[id];
-      });
-      element.addEventListener('mouseleave', () => {
-        infoPanel.textContent = 'Pasa el cursor sobre una pieza para ver información o busca un coche para ver detalles.';
-      });
-    });
-
     function showSuggestions(value) {
-      suggestions.innerHTML = '';
+      suggestions.innerHTML = "";
       if (!value) return;
 
-      const filtered = cars.filter(car =>
+      const filtered = cars.filter((car) =>
         car.toLowerCase().includes(value.toLowerCase())
       );
 
-      filtered.forEach(car => {
-        const div = document.createElement('div');
+      filtered.forEach((car) => {
+        const div = document.createElement("div");
         div.textContent = car;
-        div.addEventListener('click', () => {
+        div.addEventListener("click", () => {
           searchBox.value = car;
-          suggestions.innerHTML = '';
+          suggestions.innerHTML = "";
 
           if (carsInfo[car]) {
             infoPanel.innerHTML = `<strong>${car}</strong><br>${carsInfo[car].description}<br><em>${carsInfo[car].tuningTips}</em>`;
@@ -200,17 +180,15 @@
       });
     }
 
-    searchBox.addEventListener('input', e => {
+    searchBox.addEventListener("input", (e) => {
       showSuggestions(e.target.value);
     });
 
-    document.addEventListener('click', e => {
+    document.addEventListener("click", (e) => {
       if (e.target !== searchBox) {
-        suggestions.innerHTML = '';
+        suggestions.innerHTML = "";
       }
     });
   </script>
 </body>
 </html>
-
-
