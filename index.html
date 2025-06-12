@@ -28,6 +28,21 @@
       margin-right: auto;
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      min-height: 100px;
+    }
+    svg {
+      width: 400px;
+      height: 200px;
+      cursor: pointer;
+    }
+    .car-part {
+      fill: #bbb;
+      stroke: #333;
+      stroke-width: 2;
+      transition: fill 0.3s;
+    }
+    .car-part:hover {
+      fill: #4caf50;
     }
   </style>
 </head>
@@ -39,13 +54,43 @@
   </header>
 
   <section id="car-boceto">
-    <!-- Aquí irá el boceto SVG interactivo -->
-    <p>(Boceto interactivo de coche en desarrollo)</p>
+    <svg viewBox="0 0 400 200" role="img" aria-label="Boceto coche interactivo">
+      <!-- Carrocería -->
+      <rect class="car-part" id="carroceria" x="50" y="50" width="300" height="80" />
+      <!-- Ruedas -->
+      <circle class="car-part" id="rueda-izq" cx="100" cy="140" r="30" />
+      <circle class="car-part" id="rueda-der" cx="300" cy="140" r="30" />
+      <!-- Ventanas -->
+      <rect class="car-part" id="ventana" x="120" y="60" width="160" height="40" />
+    </svg>
   </section>
 
   <section class="info-panel" id="infoPanel">
     <p>Pasa el cursor sobre una pieza para ver información.</p>
   </section>
+
+  <script>
+    const infoPanel = document.getElementById('infoPanel');
+
+    const partsInfo = {
+      'carroceria': 'Carrocería: estructura principal del coche, donde se hacen muchas modificaciones estéticas.',
+      'rueda-izq': 'Rueda izquierda: aquí puedes cambiar llantas, neumáticos y frenos.',
+      'rueda-der': 'Rueda derecha: similar a la izquierda, importante para la estabilidad.',
+      'ventana': 'Ventanas: se pueden tintar o modificar para mejorar estética y privacidad.'
+    };
+
+    // Añadir eventos a cada parte del coche
+    Object.keys(partsInfo).forEach(id => {
+      const element = document.getElementById(id);
+      element.addEventListener('mouseenter', () => {
+        infoPanel.textContent = partsInfo[id];
+      });
+      element.addEventListener('mouseleave', () => {
+        infoPanel.textContent = 'Pasa el cursor sobre una pieza para ver información.';
+      });
+    });
+  </script>
 </body>
 </html>
+
 
