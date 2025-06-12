@@ -8,9 +8,30 @@
     body {
       font-family: 'Montserrat', sans-serif;
       margin: 20px;
-      background-color: #121212; /* Fondo oscuro elegante */
-      color: #f0f0f0; /* Texto claro */
+      background-color: #1a1a1a;
+      color: #f0f0f0;
       text-align: center;
+    }
+
+    nav {
+      background-color: #2a2a2a;
+      padding: 10px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    nav a {
+      color: #f0f0f0;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      color: #4caf50;
     }
 
     header {
@@ -110,6 +131,15 @@
 </head>
 <body>
 
+  <!-- Barra de navegación -->
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="#">Modelos</a>
+    <a href="#">Modificaciones</a>
+    <a href="#">IA Visual</a>
+    <a href="#">Contacto</a>
+  </nav>
+
   <!-- Header con logotipo -->
   <header>
     <img src="images/logo.png" alt="ZETA Logo" />
@@ -166,7 +196,6 @@
       const info = {
         "BMW M3": "BMW M3\nPotencia: 473 CV\nAño: 2023\nModificaciones legales: Suspensión deportiva, llantas, escapes homologados...",
         "Audi A4": "Audi A4\nPotencia: 204 CV\nAño: 2022\nModificaciones legales: Vinilos, luces LED, alerón discreto..."
-        // Puedes seguir añadiendo más modelos aquí...
       };
       infoPanel.textContent = info[carName] || "Información no disponible.";
     }
@@ -174,5 +203,6 @@
 
 </body>
 </html>
+
 
 
