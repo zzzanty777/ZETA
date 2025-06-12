@@ -5,7 +5,12 @@
   <title>ZETA - Tunning de coches con IA</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
-    header { text-align: center; margin-bottom: 40px; }
+    header {
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative; /* necesario para que el absolute funcione bien */
+}
+
     h1 { color: #333; }
     #searchBox {
       width: 300px;
@@ -15,20 +20,23 @@
       border-radius: 5px;
     }
     #suggestions {
-      width: 300px;
-      margin: 0 auto;
-      background: white;
-      border: 1px solid #ccc;
-      border-top: none;
-      max-height: 150px;
-      overflow-y: auto;
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 0 0 5px 5px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      font-size: 16px;
-      z-index: 1000;
+  width: 300px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;  /* Cambiar a absolute */
+  top: 60px;           /* justo debajo del input (ajustar si el input cambia) */
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  font-size: 16px;
+  z-index: 1000;
+}
+
     }
     #suggestions div {
       padding: 8px;
