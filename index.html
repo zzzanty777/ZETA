@@ -1,75 +1,118 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<header>
-  <img src="images/logo.png" alt="ZETA Logo" style="width: 160px; height: auto;" />
-  <h1>ZETA</h1>
-  <p>Tunning de coches con inteligencia artificial</p>
-</header>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
-    text-align: center;
-  }
-  .search-container {
-    position: relative; /* clave para que las sugerencias se posicionen respecto a aquí */
-    width: 300px;
-    margin: 0 auto;
-  }
-  #searchBox {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px 5px 0 0; /* redondear arriba */
-    box-sizing: border-box;
-    outline: none;
-  }
-  #suggestions {
-    position: absolute; /* para posicionar justo debajo */
-    top: 100%; /* justo debajo del input */
-    left: 0;
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
-    border-top: none; /* no duplicar borde */
-    max-height: 150px;
-    overflow-y: auto;
-    border-radius: 0 0 5px 5px; /* redondear abajo */
-    font-size: 16px;
-    box-sizing: border-box;
-    z-index: 10;
-  }
-  #suggestions div {
-    padding: 8px;
-    cursor: pointer;
-  }
-  #suggestions div:hover {
-    background-color: #4caf50;
-    color: white;
-  }
-  .info-panel {
-    margin-top: 30px;
-    background: white;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    min-height: 120px;
-    white-space: pre-wrap;
-    text-align: left;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <title>ZETA - Tunning de coches con IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header img {
+      width: 160px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 10px 0 5px;
+      font-size: 3em;
+      color: #2c3e50;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #34495e;
+    }
+
+    .search-container {
+      position: relative;
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    #searchBox {
+      width: 100%;
+      padding: 10px 40px 10px 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px 5px 0 0;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .search-container::after {
+      content: "🔍";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #999;
+      pointer-events: none;
+    }
+
+    #suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #ccc;
+      border-top: none;
+      max-height: 150px;
+      overflow-y: auto;
+      border-radius: 0 0 5px 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+      z-index: 10;
+    }
+
+    #suggestions div {
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    #suggestions div:hover {
+      background-color: #4caf50;
+      color: white;
+    }
+
+    .info-panel {
+      margin-top: 30px;
+      background: white;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      min-height: 120px;
+      white-space: pre-wrap;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
-  <h1>ZETA</h1>
-  <p>Tunning de coches con inteligencia artificial</p>
 
+  <!-- Header con logotipo -->
+  <header>
+    <img src="images/logo" alt="ZETA Logo" />
+    <h1>ZETA</h1>
+    <p>Tunning de coches con inteligencia artificial</p>
+  </header>
+
+  <!-- Buscador -->
   <div class="search-container">
     <input
       type="search"
@@ -80,125 +123,54 @@
     <div id="suggestions"></div>
   </div>
 
+  <!-- Panel de información -->
   <section class="info-panel" id="infoPanel">
     <p>Pasa el cursor sobre una pieza para ver información o busca un coche para ver detalles.</p>
   </section>
 
+  <!-- Script del buscador -->
   <script>
+    const cars = [
+      "BMW M3", "BMW M5", "Audi A4", "Audi RS6", "Seat León Cupra",
+      "Volkswagen Golf GTI", "Volkswagen Golf R", "Toyota Supra", "Nissan 350Z", "Nissan GT-R"
+    ];
+
     const searchBox = document.getElementById("searchBox");
     const suggestions = document.getElementById("suggestions");
     const infoPanel = document.getElementById("infoPanel");
 
-    const cars = [
-      "Audi A4",
-      "BMW Serie 3",
-      "Ford Mustang",
-      "Honda Civic",
-      "Mazda MX-5",
-      "Mercedes Clase C",
-      "Nissan GT-R",
-      "Toyota Supra",
-      "Volkswagen Golf",
-      "Volvo XC90",
-    ];
-
-    const carsInfo = {
-      "Audi A4": {
-        description:
-          "Audi A4: sedán alemán de lujo, potente motor y diseño elegante.",
-        tuningTips:
-          "Puedes mejorar la suspensión, añadir un kit aerodinámico y optimizar el motor.",
-      },
-      "BMW Serie 3": {
-        description:
-          "BMW Serie 3: deportivo compacto con gran rendimiento y confort.",
-        tuningTips:
-          "Modifica escape, llantas y sistema de frenos para mejor experiencia.",
-      },
-      "Ford Mustang": {
-        description:
-          "Ford Mustang: clásico muscle car americano con gran potencia.",
-        tuningTips:
-          "Cambios en motor V8, sistema de escape y mejoras en suspensión.",
-      },
-      "Honda Civic": {
-        description:
-          "Honda Civic: compacto popular con amplia comunidad de tuning.",
-        tuningTips:
-          "Personaliza motor, suspensión, y añade kits aerodinámicos.",
-      },
-      "Mazda MX-5": {
-        description:
-          "Mazda MX-5: deportivo ligero y ágil, ideal para conducción divertida.",
-        tuningTips:
-          "Mejoras en suspensión, frenos y neumáticos para mayor agarre.",
-      },
-      "Mercedes Clase C": {
-        description:
-          "Mercedes Clase C: sedán premium con gran confort y potencia.",
-        tuningTips:
-          "Optimiza motor, añade sistema de escape deportivo y detalles interiores.",
-      },
-      "Nissan GT-R": {
-        description:
-          "Nissan GT-R: superdeportivo japonés con alta tecnología y potencia.",
-        tuningTips:
-          "Modificaciones en electrónica, motor y aerodinámica avanzada.",
-      },
-      "Toyota Supra": {
-        description:
-          "Toyota Supra: icónico deportivo japonés con motor potente y diseño agresivo.",
-        tuningTips:
-          "Actualiza turbo, sistema de escape y mejora electrónica del motor.",
-      },
-      "Volkswagen Golf": {
-        description:
-          "Volkswagen Golf: compacto versátil y base para tuning urbano.",
-        tuningTips: "Personaliza suspensión, llantas y sistema de audio.",
-      },
-      "Volvo XC90": {
-        description:
-          "Volvo XC90: SUV de lujo con alta seguridad y confort.",
-        tuningTips:
-          "Modificaciones en sistema de suspensión y mejoras estéticas.",
-      },
-    };
-
-    function showSuggestions(value) {
+    searchBox.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
       suggestions.innerHTML = "";
-      if (!value) return;
+      if (!query) return;
 
-      const filtered = cars.filter((car) =>
-        car.toLowerCase().includes(value.toLowerCase())
-      );
-
-      filtered.forEach((car) => {
-        const div = document.createElement("div");
-        div.textContent = car;
-        div.addEventListener("click", () => {
-          searchBox.value = car;
+      const matches = cars.filter(car => car.toLowerCase().includes(query));
+      matches.forEach(match => {
+        const option = document.createElement("div");
+        option.textContent = match;
+        option.onclick = function () {
+          searchBox.value = match;
           suggestions.innerHTML = "";
-
-          if (carsInfo[car]) {
-            infoPanel.innerHTML = `<strong>${car}</strong><br>${carsInfo[car].description}<br><em>${carsInfo[car].tuningTips}</em>`;
-          } else {
-            infoPanel.textContent = `Información no disponible para ${car}.`;
-          }
-        });
-        suggestions.appendChild(div);
+          showCarInfo(match);
+        };
+        suggestions.appendChild(option);
       });
+    });
+
+    function showCarInfo(carName) {
+      // Aquí puedes añadir información real o de ejemplo para cada coche
+      const info = {
+        "BMW M3": "BMW M3\nPotencia: 473 CV\nAño: 2023\nModificaciones legales: Suspensión deportiva, llantas, escapes homologados...",
+        "Audi A4": "Audi A4\nPotencia: 204 CV\nAño: 2022\nModificaciones legales: Vinilos, luces LED, alerón discreto..."
+        // Agrega más coches aquí...
+      };
+      infoPanel.textContent = info[carName] || "Información no disponible.";
     }
-
-    searchBox.addEventListener("input", (e) => {
-      showSuggestions(e.target.value);
-    });
-
-    document.addEventListener("click", (e) => {
-      if (e.target !== searchBox) {
-        suggestions.innerHTML = "";
-      }
-    });
   </script>
+
+</body>
+</html>
+
 </body>
 </html>
 
