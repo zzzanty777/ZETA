@@ -8,7 +8,8 @@
     body {
       font-family: 'Montserrat', sans-serif;
       margin: 20px;
-      background-color: #f4f4f4;
+      background-color: #1a1a1a; /* Fondo oscuro elegante */
+      color: #f0f0f0; /* Texto claro */
       text-align: center;
     }
 
@@ -26,13 +27,13 @@
     header h1 {
       margin: 10px 0 5px;
       font-size: 3em;
-      color: #2c3e50;
+      color: #ffffff;
       font-weight: 700;
     }
 
     header p {
       font-size: 1.2em;
-      color: #34495e;
+      color: #cccccc;
     }
 
     .search-container {
@@ -45,10 +46,12 @@
       width: 100%;
       padding: 10px 40px 10px 10px;
       font-size: 16px;
-      border: 1px solid #ccc;
+      border: 1px solid #555;
       border-radius: 5px 5px 0 0;
       box-sizing: border-box;
       outline: none;
+      background-color: #2a2a2a;
+      color: #f0f0f0;
     }
 
     .search-container::after {
@@ -58,7 +61,7 @@
       top: 50%;
       transform: translateY(-50%);
       font-size: 18px;
-      color: #999;
+      color: #888;
       pointer-events: none;
     }
 
@@ -67,8 +70,8 @@
       top: 100%;
       left: 0;
       right: 0;
-      background: white;
-      border: 1px solid #ccc;
+      background: #2a2a2a;
+      border: 1px solid #555;
       border-top: none;
       max-height: 150px;
       overflow-y: auto;
@@ -81,6 +84,7 @@
     #suggestions div {
       padding: 8px;
       cursor: pointer;
+      color: #f0f0f0;
     }
 
     #suggestions div:hover {
@@ -90,16 +94,17 @@
 
     .info-panel {
       margin-top: 30px;
-      background: white;
+      background: #2a2a2a;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
       padding: 15px;
       border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
       min-height: 120px;
       white-space: pre-wrap;
       text-align: left;
+      color: #e0e0e0;
     }
   </style>
 </head>
@@ -107,7 +112,7 @@
 
   <!-- Header con logotipo -->
   <header>
-    <img src="images/logo" alt="ZETA Logo" />
+    <img src="images/logo.png" alt="ZETA Logo" />
     <h1>ZETA.AI</h1>
     <p>Tunning de coches con inteligencia artificial</p>
   </header>
@@ -158,18 +163,14 @@
     });
 
     function showCarInfo(carName) {
-      // Aquí puedes añadir información real o de ejemplo para cada coche
       const info = {
         "BMW M3": "BMW M3\nPotencia: 473 CV\nAño: 2023\nModificaciones legales: Suspensión deportiva, llantas, escapes homologados...",
         "Audi A4": "Audi A4\nPotencia: 204 CV\nAño: 2022\nModificaciones legales: Vinilos, luces LED, alerón discreto..."
-        // Agrega más coches aquí...
+        // Puedes seguir añadiendo más modelos aquí...
       };
       infoPanel.textContent = info[carName] || "Información no disponible.";
     }
   </script>
-
-</body>
-</html>
 
 </body>
 </html>
