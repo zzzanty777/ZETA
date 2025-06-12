@@ -7,36 +7,41 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      margin: 20px;
+      margin: 0;
       background-color: #1a1a1a;
       color: #f0f0f0;
       text-align: center;
     }
 
     nav {
-      background-color: #2a2a2a;
-      padding: 10px 0;
+      background-color: #121212;
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
       display: flex;
       justify-content: center;
-      gap: 20px;
-      border-radius: 8px;
-      margin-bottom: 30px;
+      gap: 30px;
     }
 
-    nav a {
-      color: #f0f0f0;
+    nav ul li a {
       text-decoration: none;
+      color: #f0f0f0;
       font-weight: 600;
-      font-size: 16px;
+      transition: color 0.3s;
     }
 
-    nav a:hover {
+    nav ul li a:hover {
       color: #4caf50;
     }
 
     header {
       text-align: center;
-      margin-bottom: 40px;
+      margin: 40px 0 20px;
     }
 
     header img {
@@ -131,13 +136,15 @@
 </head>
 <body>
 
-  <!-- Barra de navegación -->
+  <!-- Navbar -->
   <nav>
-    <a href="#">Inicio</a>
-    <a href="#">Modelos</a>
-    <a href="#">Modificaciones</a>
-    <a href="#">IA Visual</a>
-    <a href="#">Contacto</a>
+    <ul>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Coches</a></li>
+      <li><a href="#">Modificaciones</a></li>
+      <li><a href="#">Galería</a></li>
+      <li><a href="#">Contacto</a></li>
+    </ul>
   </nav>
 
   <!-- Header con logotipo -->
@@ -196,6 +203,7 @@
       const info = {
         "BMW M3": "BMW M3\nPotencia: 473 CV\nAño: 2023\nModificaciones legales: Suspensión deportiva, llantas, escapes homologados...",
         "Audi A4": "Audi A4\nPotencia: 204 CV\nAño: 2022\nModificaciones legales: Vinilos, luces LED, alerón discreto..."
+        // Puedes seguir añadiendo más modelos aquí...
       };
       infoPanel.textContent = info[carName] || "Información no disponible.";
     }
@@ -203,6 +211,7 @@
 
 </body>
 </html>
+
 
 
 
