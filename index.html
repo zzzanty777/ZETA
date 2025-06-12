@@ -7,20 +7,18 @@
   <style>
     body {
       font-family: 'Montserrat', sans-serif;
-      margin: 0;
+      margin: 20px;
       background-color: #1a1a1a; /* Fondo oscuro elegante */
       color: #f0f0f0; /* Texto claro */
       text-align: center;
-      scroll-behavior: smooth;
     }
 
+    /* Navbar */
     nav {
       background-color: #222;
       padding: 10px 0;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.7);
+      margin-bottom: 40px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.6);
     }
 
     nav ul {
@@ -33,7 +31,7 @@
     }
 
     nav ul li {
-      display: inline;
+      
     }
 
     nav ul li a {
@@ -43,17 +41,40 @@
       font-size: 1.1em;
       padding: 8px 15px;
       border-radius: 4px;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      display: inline-block;
+      user-select: none;
     }
 
     nav ul li a:hover {
       background-color: #4caf50;
       color: white;
+      transform: scale(1.05);
     }
 
+    nav ul li a:active {
+      animation: click-press 0.2s ease forwards;
+    }
+
+    @keyframes click-press {
+      0% {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px #4caf50;
+      }
+      50% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 #4caf50;
+      }
+      100% {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px #4caf50;
+      }
+    }
+
+    /* Header */
     header {
       text-align: center;
-      margin: 40px 20px 60px;
+      margin-bottom: 40px;
     }
 
     header img {
@@ -74,10 +95,11 @@
       color: #cccccc;
     }
 
+    /* Buscador */
     .search-container {
       position: relative;
       width: 300px;
-      margin: 0 auto 40px;
+      margin: 0 auto;
     }
 
     #searchBox {
@@ -90,6 +112,11 @@
       outline: none;
       background-color: #2a2a2a;
       color: #f0f0f0;
+      transition: box-shadow 0.3s ease;
+    }
+
+    #searchBox:focus {
+      box-shadow: 0 0 8px #4caf50;
     }
 
     .search-container::after {
@@ -123,17 +150,27 @@
       padding: 8px;
       cursor: pointer;
       color: #f0f0f0;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
     }
 
     #suggestions div:hover {
       background-color: #4caf50;
       color: white;
+      transform: scale(1.05);
     }
 
+    #suggestions div:active {
+      animation: click-press 0.2s ease forwards;
+    }
+
+    /* Panel de información */
     .info-panel {
-      margin: 0 auto 60px;
+      margin-top: 30px;
       background: #2a2a2a;
       max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
       padding: 15px;
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(255, 255, 255, 0.05);
@@ -141,85 +178,57 @@
       white-space: pre-wrap;
       text-align: left;
       color: #e0e0e0;
+      transition: box-shadow 0.3s ease;
+      user-select: none;
     }
 
-    section {
-      max-width: 900px;
-      margin: 0 auto 60px;
-      padding: 0 20px;
-      text-align: left;
+    .info-panel.show-info {
+      box-shadow: 0 0 12px #4caf50;
+      animation: fadeIn 0.4s ease forwards;
     }
 
-    section h2 {
-      color: #4caf50;
-      border-bottom: 2px solid #4caf50;
-      padding-bottom: 5px;
-      margin-bottom: 20px;
-    }
-
-    /* Footer simple */
-    footer {
-      text-align: center;
-      padding: 15px 0;
-      background: #222;
-      color: #888;
-      font-size: 0.9em;
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
     }
   </style>
 </head>
 <body>
 
+  <!-- Navbar -->
   <nav>
     <ul>
-      <li><a href="#inicio">Inicio</a></li>
-      <li><a href="#coches">Coches</a></li>
-      <li><a href="#modificaciones">Modificaciones</a></li>
-      <li><a href="#galeria">Galería</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#">Inicio</a></li>
+      <li><a href="#">Modelos</a></li>
+      <li><a href="#">Modificaciones</a></li>
+      <li><a href="#">Contacto</a></li>
     </ul>
   </nav>
 
-  <header id="inicio">
+  <!-- Header con logotipo -->
+  <header>
     <img src="images/logo.png" alt="ZETA Logo" />
     <h1>ZETA.AI</h1>
     <p>Tunning de coches con inteligencia artificial</p>
   </header>
 
-  <section id="coches">
-    <h2>Coches disponibles</h2>
-    <div class="search-container">
-      <input
-        type="search"
-        id="searchBox"
-        placeholder="Buscar coche por marca o modelo"
-        autocomplete="off"
-      />
-      <div id="suggestions"></div>
-    </div>
-    <section class="info-panel" id="infoPanel">
-      <p>Pasa el cursor sobre una pieza para ver información o busca un coche para ver detalles.</p>
-    </section>
+  <!-- Buscador -->
+  <div class="search-container">
+    <input
+      type="search"
+      id="searchBox"
+      placeholder="Buscar coche por marca o modelo"
+      autocomplete="off"
+    />
+    <div id="suggestions"></div>
+  </div>
+
+  <!-- Panel de información -->
+  <section class="info-panel" id="infoPanel">
+    <p>Pasa el cursor sobre una pieza para ver información o busca un coche para ver detalles.</p>
   </section>
 
-  <section id="modificaciones">
-    <h2>Modificaciones permitidas y legales</h2>
-    <p>Aquí podrás encontrar información sobre qué modificaciones puedes hacer en tu coche y cuáles cumplen con la normativa vigente.</p>
-  </section>
-
-  <section id="galeria">
-    <h2>Galería de coches tuneados</h2>
-    <p>Próximamente añadiremos imágenes generadas por IA de coches modificados.</p>
-  </section>
-
-  <section id="contacto">
-    <h2>Contacto</h2>
-    <p>¿Tienes dudas o quieres sugerir algo? Escríbenos y te responderemos pronto.</p>
-  </section>
-
-  <footer>
-    &copy; 2025 ZETA.AI - Todos los derechos reservados.
-  </footer>
-
+  <!-- Script del buscador -->
   <script>
     const cars = [
       "BMW M3", "BMW M5", "Audi A4", "Audi RS6", "Seat León Cupra",
@@ -233,6 +242,7 @@
     searchBox.addEventListener("input", function () {
       const query = this.value.toLowerCase();
       suggestions.innerHTML = "";
+      infoPanel.classList.remove("show-info");
       if (!query) return;
 
       const matches = cars.filter(car => car.toLowerCase().includes(query));
@@ -255,6 +265,7 @@
         // Puedes seguir añadiendo más modelos aquí...
       };
       infoPanel.textContent = info[carName] || "Información no disponible.";
+      infoPanel.classList.add("show-info");
     }
   </script>
 
