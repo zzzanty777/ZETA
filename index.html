@@ -1,75 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>ZETA - Tunning de coches con IA</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #f4f4f4;
-      text-align: center;
-    }
-
-    #searchBox {
-      width: 300px;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 5px 5px 0 0; /* redondeado arriba */
-      box-sizing: border-box;
-      outline: none;
-    }
-
-    #suggestions {
-      width: 300px;
-      margin: 0 auto;
-      background: white;
-      border: 1px solid #ccc;
-      border-top: none; /* para no duplicar borde con el input */
-      max-height: 150px;
-      overflow-y: auto;
-      border-radius: 0 0 5px 5px; /* redondeado abajo */
-      font-size: 16px;
-      box-sizing: border-box;
-    }
-
-    #suggestions div {
-      padding: 8px;
-      cursor: pointer;
-    }
-
-    #suggestions div:hover {
-      background-color: #4caf50;
-      color: white;
-    }
-
-    .info-panel {
-      margin-top: 30px;
-      background: white;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      min-height: 120px;
-      white-space: pre-wrap;
-      text-align: left;
-    }
-  </style>
+<meta charset="UTF-8" />
+<title>ZETA - Tunning de coches con IA</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+    text-align: center;
+  }
+  .search-container {
+    position: relative; /* clave para que las sugerencias se posicionen respecto a aquí */
+    width: 300px;
+    margin: 0 auto;
+  }
+  #searchBox {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px 5px 0 0; /* redondear arriba */
+    box-sizing: border-box;
+    outline: none;
+  }
+  #suggestions {
+    position: absolute; /* para posicionar justo debajo */
+    top: 100%; /* justo debajo del input */
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-top: none; /* no duplicar borde */
+    max-height: 150px;
+    overflow-y: auto;
+    border-radius: 0 0 5px 5px; /* redondear abajo */
+    font-size: 16px;
+    box-sizing: border-box;
+    z-index: 10;
+  }
+  #suggestions div {
+    padding: 8px;
+    cursor: pointer;
+  }
+  #suggestions div:hover {
+    background-color: #4caf50;
+    color: white;
+  }
+  .info-panel {
+    margin-top: 30px;
+    background: white;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    min-height: 120px;
+    white-space: pre-wrap;
+    text-align: left;
+  }
+</style>
 </head>
 <body>
   <h1>ZETA</h1>
   <p>Tunning de coches con inteligencia artificial</p>
 
-  <input
-    type="search"
-    id="searchBox"
-    placeholder="Buscar coche por marca o modelo"
-    autocomplete="off"
-  />
-  <div id="suggestions"></div>
+  <div class="search-container">
+    <input
+      type="search"
+      id="searchBox"
+      placeholder="Buscar coche por marca o modelo"
+      autocomplete="off"
+    />
+    <div id="suggestions"></div>
+  </div>
 
   <section class="info-panel" id="infoPanel">
     <p>Pasa el cursor sobre una pieza para ver información o busca un coche para ver detalles.</p>
@@ -192,3 +197,4 @@
   </script>
 </body>
 </html>
+
