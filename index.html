@@ -52,7 +52,8 @@
       margin-right: auto;
       border-radius: 8px;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      min-height: 100px;
+      min-height: 120px;
+      white-space: pre-wrap;
     }
     svg {
       width: 400px;
@@ -88,7 +89,7 @@
   </section>
 
   <section class="info-panel" id="infoPanel">
-    <p>Pasa el cursor sobre una pieza para ver información.</p>
+    <p>Pasa el cursor sobre una pieza para ver información o busca un coche para ver detalles.</p>
   </section>
 
   <script>
@@ -116,17 +117,59 @@
       "Volvo XC90"
     ];
 
+    const carsInfo = {
+      "Audi A4": {
+        description: "Audi A4: sedán alemán de lujo, potente motor y diseño elegante.",
+        tuningTips: "Puedes mejorar la suspensión, añadir un kit aerodinámico y optimizar el motor."
+      },
+      "BMW Serie 3": {
+        description: "BMW Serie 3: deportivo compacto con gran rendimiento y confort.",
+        tuningTips: "Modifica escape, llantas y sistema de frenos para mejor experiencia."
+      },
+      "Ford Mustang": {
+        description: "Ford Mustang: clásico muscle car americano con gran potencia.",
+        tuningTips: "Cambios en motor V8, sistema de escape y mejoras en suspensión."
+      },
+      "Honda Civic": {
+        description: "Honda Civic: compacto popular con amplia comunidad de tuning.",
+        tuningTips: "Personaliza motor, suspensión, y añade kits aerodinámicos."
+      },
+      "Mazda MX-5": {
+        description: "Mazda MX-5: deportivo ligero y ágil, ideal para conducción divertida.",
+        tuningTips: "Mejoras en suspensión, frenos y neumáticos para mayor agarre."
+      },
+      "Mercedes Clase C": {
+        description: "Mercedes Clase C: sedán premium con gran confort y potencia.",
+        tuningTips: "Optimiza motor, añade sistema de escape deportivo y detalles interiores."
+      },
+      "Nissan GT-R": {
+        description: "Nissan GT-R: superdeportivo japonés con alta tecnología y potencia.",
+        tuningTips: "Modificaciones en electrónica, motor y aerodinámica avanzada."
+      },
+      "Toyota Supra": {
+        description: "Toyota Supra: icónico deportivo japonés con motor potente y diseño agresivo.",
+        tuningTips: "Actualiza turbo, sistema de escape y mejora electrónica del motor."
+      },
+      "Volkswagen Golf": {
+        description: "Volkswagen Golf: compacto versátil y base para tuning urbano.",
+        tuningTips: "Personaliza suspensión, llantas y sistema de audio."
+      },
+      "Volvo XC90": {
+        description: "Volvo XC90: SUV de lujo con alta seguridad y confort.",
+        tuningTips: "Modificaciones en sistema de suspensión y mejoras estéticas."
+      }
+    };
+
     Object.keys(partsInfo).forEach(id => {
       const element = document.getElementById(id);
       element.addEventListener('mouseenter', () => {
         infoPanel.textContent = partsInfo[id];
       });
       element.addEventListener('mouseleave', () => {
-        infoPanel.textContent = 'Pasa el cursor sobre una pieza para ver información.';
+        infoPanel.textContent = 'Pasa el cursor sobre una pieza para ver información o busca un coche para ver detalles.';
       });
     });
 
-    // Función para filtrar y mostrar sugerencias
     function showSuggestions(value) {
       suggestions.innerHTML = '';
       if (!value) return;
@@ -141,8 +184,12 @@
         div.addEventListener('click', () => {
           searchBox.value = car;
           suggestions.innerHTML = '';
-          // Aquí puedes añadir acción para mostrar detalles del coche seleccionado
-          infoPanel.textContent = `Has seleccionado: ${car}`;
+
+          if (carsInfo[car]) {
+            infoPanel.innerHTML = `<strong>${car}</strong><br>${carsInfo[car].description}<br><em>${carsInfo[car].tuningTips}</em>`;
+          } else {
+            infoPanel.textContent = `Información no disponible para ${car}.`;
+          }
         });
         suggestions.appendChild(div);
       });
@@ -152,7 +199,6 @@
       showSuggestions(e.target.value);
     });
 
-    // Ocultar sugerencias al hacer click fuera
     document.addEventListener('click', e => {
       if (e.target !== searchBox) {
         suggestions.innerHTML = '';
@@ -161,5 +207,6 @@
   </script>
 </body>
 </html>
+
 
 
