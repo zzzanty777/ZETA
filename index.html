@@ -7,12 +7,36 @@
     body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
     header { text-align: center; margin-bottom: 40px; }
     h1 { color: #333; }
-    input[type="search"] {
+    #searchBox {
       width: 300px;
       padding: 10px;
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 5px;
+    }
+    #suggestions {
+      width: 300px;
+      margin: 0 auto;
+      background: white;
+      border: 1px solid #ccc;
+      border-top: none;
+      max-height: 150px;
+      overflow-y: auto;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 0 0 5px 5px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      font-size: 16px;
+      z-index: 1000;
+    }
+    #suggestions div {
+      padding: 8px;
+      cursor: pointer;
+    }
+    #suggestions div:hover {
+      background-color: #4caf50;
+      color: white;
     }
     #car-boceto {
       margin-top: 30px;
@@ -50,17 +74,15 @@
   <header>
     <h1>ZETA</h1>
     <p>Tunning de coches con inteligencia artificial</p>
-    <input type="search" placeholder="Buscar coche por marca o modelo" id="searchBox" />
+    <input type="search" placeholder="Buscar coche por marca o modelo" id="searchBox" autocomplete="off" />
+    <div id="suggestions"></div>
   </header>
 
   <section id="car-boceto">
     <svg viewBox="0 0 400 200" role="img" aria-label="Boceto coche interactivo">
-      <!-- Carrocería -->
       <rect class="car-part" id="carroceria" x="50" y="50" width="300" height="80" />
-      <!-- Ruedas -->
       <circle class="car-part" id="rueda-izq" cx="100" cy="140" r="30" />
       <circle class="car-part" id="rueda-der" cx="300" cy="140" r="30" />
-      <!-- Ventanas -->
       <rect class="car-part" id="ventana" x="120" y="60" width="160" height="40" />
     </svg>
   </section>
@@ -71,6 +93,8 @@
 
   <script>
     const infoPanel = document.getElementById('infoPanel');
+    const searchBox = document.getElementById('searchBox');
+    const suggestions = document.getElementById('suggestions');
 
     const partsInfo = {
       'carroceria': 'Carrocería: estructura principal del coche, donde se hacen muchas modificaciones estéticas.',
@@ -79,7 +103,19 @@
       'ventana': 'Ventanas: se pueden tintar o modificar para mejorar estética y privacidad.'
     };
 
-    // Añadir eventos a cada parte del coche
+    const cars = [
+      "Audi A4",
+      "BMW Serie 3",
+      "Ford Mustang",
+      "Honda Civic",
+      "Mazda MX-5",
+      "Mercedes Clase C",
+      "Nissan GT-R",
+      "Toyota Supra",
+      "Volkswagen Golf",
+      "Volvo XC90"
+    ];
+
     Object.keys(partsInfo).forEach(id => {
       const element = document.getElementById(id);
       element.addEventListener('mouseenter', () => {
@@ -88,6 +124,39 @@
       element.addEventListener('mouseleave', () => {
         infoPanel.textContent = 'Pasa el cursor sobre una pieza para ver información.';
       });
+    });
+
+    // Función para filtrar y mostrar sugerencias
+    function showSuggestions(value) {
+      suggestions.innerHTML = '';
+      if (!value) return;
+
+      const filtered = cars.filter(car =>
+        car.toLowerCase().includes(value.toLowerCase())
+      );
+
+      filtered.forEach(car => {
+        const div = document.createElement('div');
+        div.textContent = car;
+        div.addEventListener('click', () => {
+          searchBox.value = car;
+          suggestions.innerHTML = '';
+          // Aquí puedes añadir acción para mostrar detalles del coche seleccionado
+          infoPanel.textContent = `Has seleccionado: ${car}`;
+        });
+        suggestions.appendChild(div);
+      });
+    }
+
+    searchBox.addEventListener('input', e => {
+      showSuggestions(e.target.value);
+    });
+
+    // Ocultar sugerencias al hacer click fuera
+    document.addEventListener('click', e => {
+      if (e.target !== searchBox) {
+        suggestions.innerHTML = '';
+      }
     });
   </script>
 </body>
